@@ -1,210 +1,168 @@
-# Walmart Sales Analytics – Data Analyst Portfolio Project  
-
-## Executive Summary  
-
-This project simulates a real-world retail analytics workflow by transforming raw Walmart transactional data into structured, business-ready insights using Python and SQL.
-
-The dataset was cleaned, standardized, and enriched with engineered features before performing KPI-driven analysis focused on revenue, profitability, branch performance, customer behavior, and year-over-year growth trends (2019–2023).
+# Walmart Sales Analytics
+### End-to-End Data Analytics Project | Python · MySQL · Tableau
 
 ---
 
-## Project Overview  
+## 1. Executive Summary
 
-The objective of this project was to:
+This project delivers a complete retail analytics workflow — from raw data cleaning in Python to SQL-based business analysis and an interactive Tableau dashboard.
 
-- Clean and standardize raw sales data  
-- Engineer analytical features for business reporting  
-- Perform exploratory revenue analysis  
-- Develop SQL queries aligned with business KPIs  
+Using 5 years of Walmart transactional data (9,969 records, 2019–2023), I performed KPI-driven analysis focused on revenue trends, category performance, branch profitability, customer behavior, and year-over-year growth.
+
+**Key Metrics:**
+
+| Metric | Value |
+|---|---|
+| Total Revenue | $1.21M |
+| Total Transactions | 9,969 |
+| Total Items Sold | 23,483 |
+| Avg Customer Rating | 5.83 / 10 |
+| Time Period | 2019 – 2023 |
 
 ---
 
-## Dataset Summary  
+## 2. Business Problem
 
-- **Raw Records:** 10,051  
-- **Duplicate Rows Removed:** 51  
-- **Rows Removed Due to Missing Values:** 31  
-- **Final Cleaned Dataset:** 9,969 rows  
-- **Time Period Covered:** 2019 – 2023  
+Retail businesses generate large volumes of transactional data that often goes underutilized. The objective of this project was to:
 
-### Original Features
+- Identify revenue trends and year-over-year growth patterns
+- Evaluate category and branch-level profitability
+- Understand customer payment preferences and satisfaction
+- Surface operational insights around peak sales periods
+- Deliver findings through an interactive business dashboard
 
-- Invoice ID  
-- Branch  
-- City  
-- Category  
-- Unit Price  
-- Quantity  
-- Date  
-- Time  
-- Payment Method  
-- Rating  
-- Profit Margin  
+---
 
-### Engineered Features
-- Total (unit_price × quantity)  
-- Year (extracted from date)
+## 3. Dataset Summary
 
-  
-## Data Cleaning & Preparation (Python)
+| Attribute | Detail |
+|---|---|
+| Raw Records | 10,051 |
+| Duplicate Rows Removed | 51 |
+| Rows Removed (Missing Values) | 31 |
+| Final Cleaned Dataset | 9,969 rows |
+| Time Period | 2019 – 2023 |
 
-Tools Used: **Pandas, NumPy, Matplotlib, Seaborn**
+**Original Features:** Invoice ID, Branch, City, Category, Unit Price, Quantity, Date, Time, Payment Method, Rating, Profit Margin
 
-### ✔ Duplicate Handling
-- Identified and removed 51 duplicate records using `drop_duplicates()`.
+**Engineered Features:**
+- `Total` = unit_price × quantity
+- `Year` = extracted from date
 
-### ✔ Missing Value Treatment
-- Detected 31 null values in `unit_price` and `quantity`.
-- Removed rows with missing values to ensure accurate revenue calculations.
+---
 
-### ✔ Data Type Standardization
-- Removed `$` symbol from `unit_price` and converted to `float`.
-- Converted `date` column to `datetime`.
-- Standardized column names to lowercase.
+## 4. Data Cleaning & Preparation (Python)
 
-### ✔ Feature Engineering
+**Tools:** Pandas, NumPy, Matplotlib, Seaborn
 
+**Duplicate Handling**
+Identified and removed 51 duplicate records using `drop_duplicates()`.
+
+**Missing Value Treatment**
+Detected 31 null values in `unit_price` and `quantity`. Rows removed to ensure accurate revenue calculations.
+
+**Data Type Standardization**
+- Removed `$` symbol from `unit_price` and converted to float
+- Converted `date` column to datetime
+- Standardized all column names to lowercase
+
+**Feature Engineering**
 ```python
 df["total"] = df["unit_price"] * df["quantity"]
 df["year"] = df["date"].dt.year
 ```
-
-These derived features enabled revenue and year-over-year trend analysis.
-
-### Export
-
-The cleaned dataset was exported as:
-
-```
-cleaned_walmart.csv
-```
-
-For downstream SQL analysis and dashboard integration.
+Cleaned dataset exported as `cleaned_walmart.csv` for downstream SQL analysis and Tableau dashboard integration.
 
 ---
 
-## Exploratory Data Analysis (EDA)
+## 5. SQL Business Analysis
 
-### Revenue by Category
-- Compared revenue contribution across product categories.
-- Identified revenue concentration patterns.
+All business analysis conducted in **MySQL**. Key queries covered:
 
-### Revenue Trend (2019–2023)
-- Visualized annual sales performance.
-- Enabled long-term revenue monitoring.
+**Revenue Analysis**
+- Total revenue and annual revenue trend (2019–2023)
+- Revenue and profit breakdown by category
+- Year-over-Year growth using `CTE` + `LAG()` window function
 
----
-
-## SQL Business Analysis  
-
-All business analysis was conducted using MySQL.
-
-### Core KPI Analysis
-
-- Total Records  
-- Dataset Time Range  
-- Total Revenue  
-- Annual Revenue Trend  
-- Year-over-Year (YoY) Growth  
-
----
-
-### Business-Focused Queries
-
-#### Revenue by Category
-Identified highest revenue-generating product segments.
-
-#### Total Profit by Category
-Profit calculated using:
-
-```sql
-unit_price * quantity * profit_margin
-```
-
-#### Branch-Level Profitability
-Measured average profit margin per branch.
-
-#### Payment Method Analysis
-- Transaction volume by payment type  
-- Total items sold by payment channel  
-
-#### Customer Satisfaction
-Identified highest-rated categories per branch using window functions (`RANK()`).
-
-#### Operational Insights
-- Busiest day per branch  
+**Branch & Operational Analysis**
+- Average profit margin per branch
+- Busiest day per branch using `RANK()` window function
 - Sales distribution by time of day (Morning / Afternoon / Evening)
 
-#### Year-over-Year Revenue Growth
-Used CTE and `LAG()` window function to calculate revenue growth percentage.
+**Customer Analysis**
+- Transaction volume by payment method
+- Highest-rated category per branch using `RANK()` window function
 
 ---
 
-## Key Business Insights
+## 6. Key Business Insights
 
-### Revenue Distribution by Category
-Revenue varies across product categories, with certain categories contributing more to total revenue than others.  
-This highlights opportunities for category-level prioritization in marketing and inventory planning.
+**Revenue Trend (2019–2023)**
+Revenue peaked in 2019 at $307,587 before stabilizing around $210K–$232K annually. The trend suggests a post-2019 normalization worth investigating for strategic planning.
 
----
+**Category Performance**
+Fashion Accessories ($489,481) and Home & Lifestyle ($489,250) together account for ~81% of total revenue — significantly outperforming the remaining 4 categories. This signals a clear opportunity for inventory and marketing prioritization.
 
-### Multi-Year Revenue Trend (2019–2023)
-Annual revenue analysis enables performance comparison across years and structured growth monitoring.  
-Year-over-Year (YoY) calculation provides visibility into revenue change patterns over time.
+**Time-of-Day Sales Pattern**
+Afternoon drives the highest transaction volume (4,636 transactions — 46.5% of all sales), followed by Evening (3,246) and Morning (2,087). This directly supports staffing and promotional scheduling decisions.
 
----
+**Payment Method Distribution**
+Ewallet (42.69%) is the dominant payment channel, followed by Credit Card (38.93%) and Cash (18.38%). The low cash usage suggests the customer base skews digital — relevant for checkout infrastructure decisions.
 
-### Branch-Level Profitability Differences
-Average profit margin varies across branches.  
-This may reflect differences in pricing strategy or operational performance and supports branch-level benchmarking.
-
----
-
-### Customer Behavior Patterns
-
-#### Payment Preferences
-Transaction distribution across payment methods provides insight into customer payment behavior, which may inform operational and promotional decisions.
-
-#### Time-of-Day Sales Trends
-Sales segmentation into Morning, Afternoon, and Evening highlights peak transaction periods, supporting data-driven staffing and scheduling considerations.
+**Branch Profitability**
+Average profit margin varies across branches, indicating differences in pricing strategy or product mix. High-margin branches can serve as benchmarks for operational improvements.
 
 ---
 
-### Customer Satisfaction Patterns
-Highest-rated categories per branch were identified using ranking functions, enabling comparison of customer satisfaction across locations and product segments.
+## 7. Tableau Dashboard
 
-## Strategic Recommendations
+Built an interactive single-page dashboard featuring:
 
-- Focus marketing and inventory efforts on high-revenue categories.  
-- Benchmark high-margin branches to replicate successful operational practices.  
-- Align staffing with peak transaction hours.  
-- Monitor YoY revenue trends quarterly for early performance detection.  
-- Combine revenue and satisfaction metrics for high-value product identification.  
+- **4 KPI Cards:** Total Revenue ($1.21M), Total Items Sold (23,483), Total Transactions (9,969), Avg Rating (5.83)
+- **Revenue Trend Line Chart:** Annual revenue 2019–2023 with data labels
+- **Revenue by Category Bar Chart:** Sorted by revenue with exact values
+- **Sales Distribution Map:** Geographic bubble map of revenue by city across Texas
+- **Payment Methods Donut Chart:** Percentage breakdown across 3 payment channels
+- **Transactions by Time of Day:** Morning / Afternoon / Evening bar chart
+- **Interactive Year Filter:** Slider filter to view any year's data in isolation
 
----
-
-## Skills Demonstrated  
-
-- Data Cleaning & Preprocessing (Pandas)  
-- Exploratory Data Analysis  
-- SQL Aggregations (SUM, AVG, GROUP BY)  
-- Window Functions (RANK, LAG)  
-- Basic CTE Usage (YoY Analysis)  
-- Revenue & Profitability Analysis  
-- Analytical Insight Communication  
+🔗 [View Live Dashboard on Tableau Public](https://public.tableau.com/app/profile/jhanvi.joshi6942/viz/walmart_sales_dashboard_17733265393420/walmart_sales_dashboard)
 
 ---
 
-## Future Enhancements  
+## 8. Strategic Recommendations
 
-- Build an interactive Power BI dashboard.  
-- Perform customer segmentation analysis.  
-- Implement time-series forecasting for revenue prediction.    
-- Integrate cost and inventory data for deeper margin insights.  
+1. **Prioritize Fashion Accessories and Home & Lifestyle** in inventory planning — they drive 81% of revenue
+2. **Schedule peak staffing during Afternoon hours** — 46.5% of all transactions occur then
+3. **Invest in Ewallet infrastructure** — dominant payment channel at 42.7%
+4. **Benchmark high-margin branches** to replicate successful operational practices across all locations
+5. **Investigate the post-2019 revenue decline** — understanding the cause could unlock recovery strategies
 
 ---
 
-## Author  
+## 9. Limitations
 
-Jhanvi  
-Aspiring Data Analyst | Business Analytics Enthusiast  
+- No cost or inventory data available for true margin analysis
+- Historical snapshot only — trends may not reflect current retail patterns
+
+---
+
+## 10. Next Steps
+
+- Time-series forecasting for revenue prediction
+- Customer segmentation using RFM analysis
+- Integration of cost data for true profitability analysis
+- Automated monthly reporting pipeline
+
+---
+
+## Skills Demonstrated
+
+- Data Cleaning & Preprocessing (Pandas, NumPy)
+- Feature Engineering
+- Exploratory Data Analysis
+- SQL Aggregations (SUM, AVG, COUNT, GROUP BY)
+- Window Functions (RANK, LAG)
+- CTE Usage for YoY Analysis
+- Tableau Dashboard Design
+- Business Insight Communication
