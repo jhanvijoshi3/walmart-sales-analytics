@@ -5,9 +5,11 @@
 
 ## 1. Executive Summary
 
-This project delivers a complete retail analytics workflow — from raw data cleaning in Python to SQL-based business analysis and an interactive Tableau dashboard.
+This project delivers an end-to-end retail analytics workflow using Python, MySQL, and Tableau.
 
-Using 5 years of Walmart transactional data (9,969 records, 2019–2023), I performed KPI-driven analysis focused on revenue trends, category performance, branch profitability, customer behavior, and year-over-year growth.
+Using 5 years of Walmart transactional data (9,969 records), I performed KPI-driven analysis to evaluate revenue trends, product category performance, customer behavior, and operational patterns.
+
+The final output is an interactive Tableau dashboard designed to support data-driven retail decision making.
 
 **Key Metrics:**
 
@@ -16,7 +18,7 @@ Using 5 years of Walmart transactional data (9,969 records, 2019–2023), I perf
 | Total Revenue | $1.21M |
 | Total Transactions | 9,969 |
 | Total Items Sold | 23,483 |
-| Avg Customer Rating | 5.83 / 10 |
+| Avg Customer Rating | 5.83 |
 | Time Period | 2019 – 2023 |
 
 ---
@@ -75,7 +77,7 @@ Cleaned dataset exported as `cleaned_walmart.csv` for downstream SQL analysis an
 
 ---
 
-## 5. SQL Business Analysis
+## 5. Business Analysis with SQL
 
 All business analysis conducted in **MySQL**. Key queries covered:
 
@@ -113,8 +115,23 @@ Ewallet (42.69%) is the dominant payment channel, followed by Credit Card (38.93
 Average profit margin varies across branches, indicating differences in pricing strategy or product mix. High-margin branches can serve as benchmarks for operational improvements.
 
 ---
+## 7. Skills Demonstrated
 
-## 7. Tableau Dashboard
+- Data Cleaning & Preprocessing (Pandas, NumPy)
+- Feature Engineering
+- Exploratory Data Analysis
+- SQL Aggregations (SUM, AVG, COUNT, GROUP BY)
+- Window Functions (RANK, LAG)
+- CTE Usage for YoY Analysis
+- Tableau Dashboard Design
+- Business Insight Communication
+
+---
+## 8. Tableau Dashboard
+
+<p align="center">
+  <img src="walmart_sales_dashboard.png" width="900">
+</p>
 
 Built an interactive single-page dashboard featuring:
 
@@ -128,9 +145,10 @@ Built an interactive single-page dashboard featuring:
 
 🔗 [View Live Dashboard on Tableau Public](https://public.tableau.com/app/profile/jhanvi.joshi6942/viz/walmart_sales_dashboard_17733265393420/walmart_sales_dashboard)
 
+
 ---
 
-## 8. Strategic Recommendations
+## 9. Strategic Recommendations
 
 1. **Prioritize Fashion Accessories and Home & Lifestyle** in inventory planning — they drive 81% of revenue
 2. **Schedule peak staffing during Afternoon hours** — 46.5% of all transactions occur then
@@ -140,14 +158,14 @@ Built an interactive single-page dashboard featuring:
 
 ---
 
-## 9. Limitations
+## 10. Limitations
 
 - No cost or inventory data available for true margin analysis
 - Historical snapshot only — trends may not reflect current retail patterns
 
 ---
 
-## 10. Next Steps
+## 11. Next Steps
 
 - Time-series forecasting for revenue prediction
 - Customer segmentation using RFM analysis
@@ -156,13 +174,3 @@ Built an interactive single-page dashboard featuring:
 
 ---
 
-## Skills Demonstrated
-
-- Data Cleaning & Preprocessing (Pandas, NumPy)
-- Feature Engineering
-- Exploratory Data Analysis
-- SQL Aggregations (SUM, AVG, COUNT, GROUP BY)
-- Window Functions (RANK, LAG)
-- CTE Usage for YoY Analysis
-- Tableau Dashboard Design
-- Business Insight Communication
